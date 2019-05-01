@@ -33,6 +33,7 @@ const Fractions = () => {
 
   return (
     <div className="fractions-container">
+      <h1>Let me denominate for you :)</h1>
       <form
         onSubmit={handleSubmit}
         className="form-container"
