@@ -13,7 +13,8 @@ export const validateThreeDigitsBehindEveryDots: Validate = amount => {
         const nextThreeDigitsAreNumbers = 
         !isNaN(parseInt(amount[i + 1])) &&
         !isNaN(parseInt(amount[i + 2])) &&
-        !isNaN(parseInt(amount[i + 3]))
+        !isNaN(parseInt(amount[i + 3])) &&
+        isNaN(parseInt(amount[i + 4]))
         if (!nextThreeDigitsAreNumbers) return true
       }
     }
@@ -23,7 +24,7 @@ export const validateThreeDigitsBehindEveryDots: Validate = amount => {
 }
 
 // space separator
-export const validateNoSpaceSpearator: Validate = amount => amount.includes(' ') && amount.replace(',', '').replace('.', '').trim().split(' ').length > 1
+export const validateNoSpaceSpearator: Validate = amount => amount.includes(' ') && amount.replace(/,/g, '').replace(/\./g, '').trim().split(' ').length > 1
 
 const separatorValidation: ValidationConfig<string> = {
   name: 'separator',
@@ -41,14 +42,14 @@ const separatorValidation: ValidationConfig<string> = {
     invalidCondition: validateNotMoreThanTwoDigitsBehindComma,
   }, {
     description: 'behind every dots must be three digits number',
-    invalidMessage: 'invalid separator, next three digits after dot (.) arent\'t numbers',
+    invalidMessage: 'invalid separator, must have three digits after a dot (.)',
     invalidCondition: validateThreeDigitsBehindEveryDots,
   }, {
     description: 'no space between numbers',
     invalidMessage: 'invalid separator, space in an invalid separator',
     invalidCondition: validateNoSpaceSpearator,
   }],
-  nextValue: amount => parseFloat(amount.replace('.', '').replace(',', '.')).toString()
+  nextValue: amount => parseFloat(amount.replace(/\./g, '').replace(/,/g, '.')).toString()
 }
 
 export default separatorValidation
