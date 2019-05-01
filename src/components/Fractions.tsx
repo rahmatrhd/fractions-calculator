@@ -1,7 +1,7 @@
 import React from 'react'
 import './Fractions.css'
 import { getFractions, FractionAmount } from '../utils/fractions'
-import { validateAmount, formatCurrency } from '../utils/currency'
+import { validateCurrencyAmount, formatCurrency } from '../utils/currency'
 
 const Fractions = () => {
   const [amount, setAmount] = React.useState('')
@@ -19,7 +19,7 @@ const Fractions = () => {
     event.preventDefault()
 
     resetResult()
-    const validatedAmount = validateAmount(amount, { currency: 'Rp' })
+    const validatedAmount = validateCurrencyAmount(amount, { currency: 'Rp' })
     if (!validatedAmount.isValid) {
       setError(validatedAmount.message)
     } else {
