@@ -2,8 +2,10 @@ import React from 'react'
 import './Fractions.css'
 import { getFractions, FractionAmount } from '../utils/fractions'
 import { validateCurrencyAmount, formatCurrency } from '../utils/currency'
+import { Currency } from '../constants/currency'
 
 const Fractions = () => {
+  const currency = Currency.Rupiah
   const [amount, setAmount] = React.useState('')
   const [error, setError] = React.useState<string | undefined>()
   const [fractions, setFractions] = React.useState<Array<FractionAmount>>([])
@@ -19,7 +21,7 @@ const Fractions = () => {
     event.preventDefault()
 
     resetResult()
-    const validatedAmount = validateCurrencyAmount(amount, { currency: 'Rp' })
+    const validatedAmount = validateCurrencyAmount(amount, { currency })
     if (!validatedAmount.isValid) {
       setError(validatedAmount.message)
     } else {
@@ -40,6 +42,7 @@ const Fractions = () => {
           value={amount}
           onChange={e => setAmount(e.target.value)}
           className="paper amount-input"
+          placeholder={`You can use "${currency}"`}
         />
         <input
           type="submit"
